@@ -34,7 +34,7 @@ const AdminDialog = () => {
   });
 
   const encryptedKey =
-    typeof window !== undefined
+    typeof window !== "undefined"
       ? window.localStorage.getItem("access_token")
       : null;
 
