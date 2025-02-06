@@ -30,11 +30,10 @@ export const getUser = async (userId: string) => {
   if (error) {
     redirect("/error");
   }
-
-  if (data) {
-    redirect(`/patients/${data[0].id}/new-appointment`);
+  // console.log(data, "get user");
+  if (data.length > 0) {
+    redirect(`/patients/${data[0]?.id}/new-appointment`);
   }
-  return data[0];
 };
 
 export async function login({ email }: LoginProps) {
@@ -52,6 +51,8 @@ export async function login({ email }: LoginProps) {
   if (error) {
     redirect("/error");
   }
+
+  console.log(user, "Success");
 
   redirect(`/patients/${user?.id}/register`);
 }

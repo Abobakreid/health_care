@@ -6,6 +6,7 @@ import Image from "next/image";
 const Page = async ({ params }: PatientIdProps) => {
   const { patientId } = await params;
   await getUser(patientId);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-svh flex-col lg:flex-row px-4 lg:pl-4">
       <div className="col-span-1">
