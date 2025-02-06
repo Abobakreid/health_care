@@ -33,7 +33,7 @@ export const getUser = async (userId: string) => {
   }
 
   if (data) {
-    console.log(data[0].privacyConsent);
+    // console.log(data[0].privacyConsent);
     redirect(`/patients/${data[0].id}/new-appointment`);
   }
   // redirect(`/patients/${data[0]?.id}/register`);
@@ -50,7 +50,7 @@ export async function login({ email }: LoginProps) {
     password: "StrongPassword123!",
   };
 
-  console.log(logindata, "logindata");
+  // console.log(logindata, "logindata");
 
   const {
     data: { user },
@@ -84,7 +84,7 @@ export async function signup({ email }: LoginProps) {
     redirect("/error");
   }
 
-  console.log(user?.id, "response1");
+  // console.log(user?.id, "response1");
 
   revalidatePath("/", "layout");
   redirect(`/patients/${user?.id}/register`);
@@ -107,8 +107,9 @@ async function UploadFile(
   const { data, error } = await supabase.storage
     .from("healthCare")
     .upload(`${userID}/${uuidv4()}`, file!);
-  console.log("Uploaded file", error);
+
   if (error && !data) {
+    console.log("Uploaded file", error);
     redirect("/error");
   }
 
@@ -139,7 +140,7 @@ export async function register(info: RegisterProps) {
     redirect("/error");
   }
 
-  console.log(data, "response1");
+  // console.log(data, "response1");
 
   revalidatePath("/", "layout");
   redirect(`/patients/${info?.userId}/new-appointment`);
@@ -157,7 +158,7 @@ export async function CreateAppointment(info: CreateAppointmentProps) {
     .insert([Userdata])
     .select();
 
-  console.log(error, "response1");
+  // console.log(error, "response1");
   if (error && !data) {
     redirect("/error");
   }
@@ -169,14 +170,14 @@ export async function CreateAppointment(info: CreateAppointmentProps) {
 
 export async function GetAppointment(appointmentId: string) {
   const supabase = await createClient();
-  console.log(appointmentId, "success");
+  // console.log(appointmentId, "success");
 
   const { data, error } = await supabase
     .from("appointment")
     .select("*")
     .eq("id", appointmentId);
 
-  console.log(error, "success");
+  // console.log(error, "success");
   if (error && !data) {
     redirect("/error");
   }
@@ -196,9 +197,9 @@ export async function GetAppointmentList(): Promise<GetAppointmentListProps> {
     scheduled: 0,
   };
 
-  console.log(data, "initial");
+  // console.log(data, "initial");
 
-  console.log(error, "success");
+  // console.log(error, "success");
   if (error && !data) {
     redirect("/error");
   }
@@ -223,7 +224,7 @@ export const sendSMS = async (toWho: string, message: string) => {
       from: twilioPhoneNumber,
       to: "+201122889039",
     });
-    console.log("SMS sent wow:", response.sid);
+    // console.log("SMS sent wow:", response.sid);
     return response;
   } catch (error) {
     console.error("Error sending SMS wow:", error);
@@ -245,7 +246,7 @@ export async function UpdateAppointment(info: UpdateAppointmentProps) {
     .eq("id", info.appointmentId)
     .select("*, patients (id, name, phone)");
 
-  console.log(data, "response1op new kio");
+  // console.log(data, "response1op new kio");
   if (error && !data) {
     redirect("/error");
   }

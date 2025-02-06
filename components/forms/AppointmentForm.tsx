@@ -64,8 +64,8 @@ const AppointmentForm = ({
           state: status,
           userId: patientId,
         };
-        const response = await CreateAppointment(data);
-        console.log(response, "response2");
+        await CreateAppointment(data);
+        // console.log(response, "response2");
       } else {
         const data = {
           appointmentId: appointment?.id ?? "",
@@ -80,13 +80,12 @@ const AppointmentForm = ({
           },
         };
         const response = await UpdateAppointment(data);
-        console.log(response, "response2");
         if (response.state && setOpen) {
           setOpen(false);
         }
       }
     } catch (error) {
-      console.log(values, error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

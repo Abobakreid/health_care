@@ -34,17 +34,17 @@ const AuthForm = ({ formType }: AuthFormProps) => {
           email: values.email,
           password: values.username!,
         };
-        const response = await signup(data);
-        console.log(response, "response2");
+        await signup(data);
+        // console.log(response, "response2");
       } else {
         const data = {
           email: values.email,
         };
-        const response = await login(data);
-        console.log(response, "response2");
+        await login(data);
+        // console.log(response, "response2");
       }
     } catch (error) {
-      console.log(values, error, formType);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

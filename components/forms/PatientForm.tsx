@@ -84,8 +84,8 @@ const PatientForm = ({ patientId }: { patientId: string }) => {
         disclosureConsent: values.checkKnowledge,
         userId: patientId,
       };
-      const response = await register(data);
-      console.log(response, "response2");
+      await register(data);
+      // console.log(response, "response2");
     } catch (error) {
       console.log(error);
     } finally {
