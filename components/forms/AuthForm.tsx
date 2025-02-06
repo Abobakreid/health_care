@@ -35,13 +35,11 @@ const AuthForm = ({ formType }: AuthFormProps) => {
           password: values.username!,
         };
         await signup(data);
-        // console.log(response, "response2");
       } else {
         const data = {
           email: values.email,
         };
         await login(data);
-        // console.log(response, "response2");
       }
     } catch (error) {
       console.log(error);

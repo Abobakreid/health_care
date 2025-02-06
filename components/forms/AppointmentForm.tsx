@@ -65,7 +65,6 @@ const AppointmentForm = ({
           userId: patientId,
         };
         await CreateAppointment(data);
-        // console.log(response, "response2");
       } else {
         const data = {
           appointmentId: appointment?.id ?? "",

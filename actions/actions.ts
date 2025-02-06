@@ -28,48 +28,37 @@ export const getUser = async (userId: string) => {
     .eq("id", userId);
 
   if (error) {
-    console.log(error, "Authent");
     redirect("/error");
   }
 
   if (data) {
-    // console.log(data[0].privacyConsent);
     redirect(`/patients/${data[0].id}/new-appointment`);
   }
-  // redirect(`/patients/${data[0]?.id}/register`);
   return data[0];
 };
 
 export async function login({ email }: LoginProps) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const logindata = {
     email: email,
     password: "StrongPassword123!",
   };
-
-  // console.log(logindata, "logindata");
 
   const {
     data: { user },
     error,
   } = await supabase.auth.signInWithPassword(logindata);
   if (error) {
-    console.log(error, "Authent");
     redirect("/error");
   }
 
-  revalidatePath("/", "layout");
   redirect(`/patients/${user?.id}/register`);
 }
 
 export async function signup({ email }: LoginProps) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const Userdata = {
     email: email,
     password: "StrongPassword123!",
@@ -83,10 +72,6 @@ export async function signup({ email }: LoginProps) {
   if (error && !user) {
     redirect("/error");
   }
-
-  // console.log(user?.id, "response1");
-
-  revalidatePath("/", "layout");
   redirect(`/patients/${user?.id}/register`);
 }
 
@@ -109,7 +94,6 @@ async function UploadFile(
     .upload(`${userID}/${uuidv4()}`, file!);
 
   if (error && !data) {
-    console.log("Uploaded file", error);
     redirect("/error");
   }
 
@@ -118,9 +102,6 @@ async function UploadFile(
 
 export async function register(info: RegisterProps) {
   const supabase = await createClient();
-
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   let storageData: storageProps | null = null;
   if (info.identificationDocumentUrl) {
     storageData = await UploadFile(info.identificationDocumentUrl, info.userId);
@@ -140,13 +121,9 @@ export async function register(info: RegisterProps) {
     redirect("/error");
   }
 
-  // console.log(data, "response1");
-
-  revalidatePath("/", "layout");
   redirect(`/patients/${info?.userId}/new-appointment`);
 }
 export async function CreateAppointment(info: CreateAppointmentProps) {
-  // console.log(info, "Create App");
   const supabase = await createClient();
 
   const Userdata = {
@@ -158,11 +135,9 @@ export async function CreateAppointment(info: CreateAppointmentProps) {
     .insert([Userdata])
     .select();
 
-  // console.log(error, "response1");
   if (error && !data) {
     redirect("/error");
   }
-  revalidatePath("/", "layout");
   redirect(
     `/patients/${info?.userId}/new-appointment/success?appointmentId=${data[0].id}`
   );
@@ -170,14 +145,12 @@ export async function CreateAppointment(info: CreateAppointmentProps) {
 
 export async function GetAppointment(appointmentId: string) {
   const supabase = await createClient();
-  // console.log(appointmentId, "success");
 
   const { data, error } = await supabase
     .from("appointment")
     .select("*")
     .eq("id", appointmentId);
 
-  // console.log(error, "success");
   if (error && !data) {
     redirect("/error");
   }
@@ -197,9 +170,6 @@ export async function GetAppointmentList(): Promise<GetAppointmentListProps> {
     scheduled: 0,
   };
 
-  // console.log(data, "initial");
-
-  // console.log(error, "success");
   if (error && !data) {
     redirect("/error");
   }
@@ -224,7 +194,6 @@ export const sendSMS = async (toWho: string, message: string) => {
       from: twilioPhoneNumber,
       to: "+201122889039",
     });
-    // console.log("SMS sent wow:", response.sid);
     return response;
   } catch (error) {
     console.error("Error sending SMS wow:", error);
@@ -233,7 +202,6 @@ export const sendSMS = async (toWho: string, message: string) => {
 };
 
 export async function UpdateAppointment(info: UpdateAppointmentProps) {
-  // console.log(info, "Create App");
   const supabase = await createClient();
 
   const Userdata = {
@@ -246,7 +214,6 @@ export async function UpdateAppointment(info: UpdateAppointmentProps) {
     .eq("id", info.appointmentId)
     .select("*, patients (id, name, phone)");
 
-  // console.log(data, "response1op new kio");
   if (error && !data) {
     redirect("/error");
   }

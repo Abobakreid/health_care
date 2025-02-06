@@ -10,7 +10,6 @@ const page = async ({ params, searchParams }: SuccessProps) => {
   const { patientId } = await params;
   const { appointmentId } = await searchParams;
   const appointment = await GetAppointment(appointmentId);
-  // console.log(appointment, "Appointment successfully");
   const doctor = Doctors.find(
     (doctor) => doctor.name === appointment.primaryphysician
   );

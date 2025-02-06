@@ -52,11 +52,9 @@ const AdminDialog = () => {
   function onSubmit(values: z.infer<typeof inputOTPSchema>) {
     if (values.pin === process.env.NEXT_PUBLIC_PASSKEY) {
       const encryptedKey = encryptKey(values.pin);
-      // console.log(values.pin, "encryptedKey ki");
       localStorage.setItem("access_token", encryptedKey);
       router.push("/admin");
     } else {
-      // console.log(values.pin, "encryptedKey");
       setError("Invalid OTP , please try again");
     }
   }

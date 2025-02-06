@@ -85,7 +85,6 @@ const PatientForm = ({ patientId }: { patientId: string }) => {
         userId: patientId,
       };
       await register(data);
-      // console.log(response, "response2");
     } catch (error) {
       console.log(error);
     } finally {
